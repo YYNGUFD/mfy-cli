@@ -1,8 +1,8 @@
 
 
 const { getRepoList, getRepoTags } = require('../request/index')
-const { wrapLoading } = require('../tools/util')
-const { chalk, inquirer } = require('../tools/module')
+const { wrapLoading ,Loading} = require('../tools/util')
+const { chalk, inquirer,ora} = require('../tools/module')
 const exec = require('child_process').exec
 const {gitOwner} = require('../config');
 
@@ -10,7 +10,9 @@ const {gitOwner} = require('../config');
 const downloadGitRepo = require('download-git-repo')
 const util = require('util');
 const path = require('path')
-const log = console.log
+const log = console.log 
+
+const loading = new Loading();
 class Creator {
   constructor(projectName, targetDir) {
 
@@ -31,7 +33,7 @@ class Creator {
     let downloadUrl = await this.downloadGit(repo, tag);
 
     // 下载完成后进入到当前的下载url中进行安装node_modules以及安装完成后进行提示
-    let result = this.downloadNodeModules();
+    let result = this.downloadNodeModules(downloadUrl);
 
   }
   async getRepoList() {
@@ -79,11 +81,23 @@ class Creator {
     return downloadUrl;
   }
   async downloadNodeModules(downLoadUrl){
-    console.log(chalk.green('\n √ Generation completed!'))
-    console.log(chalk.green(`\n cd ${this.name} \n npm install \n`))
-
-    return true;
-
+    let that = this;
+    log(chalk.green.bold('\n √ Generation completed!'))
+  
+    const execProcess = `cd ${downLoadUrl} && npm install`; 
+    loading.show("Downloading node_modules")
+    exec(execProcess, function(error, stdout, stderr) { 
+      if(error){ 
+         loading.fail(error)
+         log(chalk.red.bold(`\rplease enter file《 ${that.name} 》 to install dependencies`))
+         log(chalk.green.bold(`\n cd ${that.name} \n npm install \n`))
+         process.exit()
+      }else{
+        log(chalk.green.bold(`\n cd ${that.name} \n npm run server \n`))
+      } 
+      process.exit()
+    });
+    return true; 
   }
 
 

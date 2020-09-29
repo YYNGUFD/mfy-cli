@@ -42,7 +42,25 @@ function isFn(fn){
 function isString(str){
   return typeof str =='string'
 }
+
+//创建loading
+class  Loading{
+  constructor(msg){ 
+  }
+  show(msg){
+    this.spiner = ora(msg);
+    this.spiner.start(); //开启加载 
+  }
+  fail(msg){
+    if(!this.spiner) return 
+    this.spiner.fail(msg)
+  }
+  succeed(msg){
+    this.spiner.succeed();
+  }
+}
 module.exports={
  sleep,
- wrapLoading
+ wrapLoading,
+ Loading:Loading
 }

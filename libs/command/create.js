@@ -35,9 +35,9 @@ module.exports =async function(projectName,options){
          log(chalk.blue("Have no choice"))
          process.exit(0) 
        }else if(action =='overwrite'){
-         log(chalk.blue(`\r\Removing.....`))
+         log(chalk.blue.bold(`\r Removing.....`))
          await fse.remove(targetDir);
-         log(chalk.blue(`\r successfully delete`))
+         log(chalk.blue(`\rThe file has been successfully deleted`))
        }
       }
     }
