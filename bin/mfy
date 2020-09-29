@@ -1,0 +1,93 @@
+#!/usr/bin/env node
+ 
+
+const { chalk, program, inquirer } = require('../libs/tools/module')
+const packageData = require('../package.json')
+const log = console.log;
+
+//当前cli的名称 
+const cliName = packageData.name;
+
+console.log(chalk.greenBright.bold(`🌹 🌹 welcome to use ${cliName}🌹 🌹 \r\t`));
+
+
+/**
+ * 参数的格式化插件
+ * @param cmd 当前命令行中的命令数据 
+ */
+const clearArgs = (cmd) => {
+  const args = {};
+  cmd.options.forEach(o => {
+    const key = o.long.slice(2)
+    //如果当前命令通过key能取到这个值，则存在这个值
+    if (cmd[key])
+      args[key] = cmd[key];
+  });
+  return args
+} 
+// const mapActionList={
+//   'create':{
+//     alias:'c',
+//     description:"create a new projec",
+//     options:[
+//       '-f,--force overwrite target if it exists',
+//     ]
+//   },
+//   'config':{
+//     alias:'conf',
+//     description:"inspect and modify the config",
+//     options:[
+//       '-g,--get <path>  get value from options',
+//       '-s,--set <path> <value>  set value from options',
+//       '-d,--delete <path> <value>  delete options from config'
+//     ]
+//   },
+//   '*':{
+//     alias: '',
+//     description:'command not found',
+//     examples: []
+//   }
+// }
+
+//创建create命令 并进行操作 
+program.command('create <app-name>')
+  .description("create a new project")
+  .option("-f,--force", 'overwrite target if it exists')
+  .action((name, cmd) => {
+    if (!name) {
+      log(chalk.red("please write project name"))
+      return;
+    }
+    require('../libs/command/create.js')(name, clearArgs(cmd))
+})
+
+  
+program.command('config [value]')
+  .description("inspect and modify the config")
+  .option("-g,--get <path>", 'get value from options')
+  .option("-s,--set <path> <value>", 'set value from options')
+  .option("-d,--delete <path> <value>", 'delete options from config')
+  .action((value, cmd) => {
+    //调用config
+    console.log(value, clearArgs(cmd)) //提取cmd中的属性
+  })
+
+//credit-cli 的版本信息
+program
+  .version(`${cliName}@${packageData.version}`)
+  .usage('<command> [option]')
+
+//在 --help 的时候进行调整
+program.on('--help', () => {
+  log(`Run ${chalk.red(`${cliName} <command> --help`)} show details`)
+})
+
+//解析用户执行命令时候传入的参数 根据参数进行配置 
+program.parse(process.argv)
+
+if (!program.args.length) {
+  program.help()
+}
+
+
+
