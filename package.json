@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Generate visual code ",
   "bin": "./bin/mfy",
-  "gitOwner":"mfy-template",
+  "gitOwner": "mfy-template",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

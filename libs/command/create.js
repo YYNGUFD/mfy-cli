@@ -1,10 +1,12 @@
  
+ 
  const path = require('path')
  const {chalk,inquirer,fse} = require('../tools/module')
  const Creator = require('../create-project/Creator')
  const log = console.log;
 //创建项目
 module.exports =async function(projectName,options){ 
+    // todo 校验文件内容格式
     //获取当前命令执行时候的工作目录
     const cwd = process.cwd();
 

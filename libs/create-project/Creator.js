@@ -3,6 +3,7 @@
 const { getRepoList, getRepoTags } = require('../request/index')
 const { wrapLoading } = require('../tools/util')
 const { chalk, inquirer } = require('../tools/module')
+const exec = require('child_process').exec
 const {gitOwner} = require('../config');
 
 //downloadGitRepo 为普通方法，不支持promise
@@ -27,9 +28,10 @@ class Creator {
     let tag = await this.getRepoTags(repo);
 
     //根据选择的模版和版本下载当前的地址内容
-    let template = await this.downloadGit(repo, tag);
+    let downloadUrl = await this.downloadGit(repo, tag);
 
-    //进入当前的已经下载的内容 去
+    // 下载完成后进入到当前的下载url中进行安装node_modules以及安装完成后进行提示
+    let result = this.downloadNodeModules();
 
   }
   async getRepoList() {
@@ -51,7 +53,7 @@ class Creator {
   }
 
   async getRepoTags(repo) {
-    let tags = await wrapLoading(getRepoTags, `Waiting for fetch the template of ${repo} tags`, repo);
+    let tags = await wrapLoading(getRepoTags, `Waiting for fetch the tags of template ${repo}`, repo);
     if (tags.length == 0) {
       log(chalk.red("No content is currently downloaded"))
     }
@@ -68,14 +70,20 @@ class Creator {
     let downloadUrl = path.resolve(process.cwd(), this.target);
   
     //先拼接出下载路径
-    let requestUrl = `${gitOwner}/${repo}${tag ? '#' + tag : ''}`
-    console.log(repo,tag)
-    console.log(requestUrl)
-    //2.把路径资源下载到某个路径上(后续可以增加缓存功能) 
-    let result =await this.downloadGitRepo(requestUrl, downloadUrl)
-    // let result =await wrapLoading(this.downloadGitRepo,`Waiting for download the template of ${repo}`,requestUrl, downloadUrl);
-    console.log(result)
+    let requestUrl = `${gitOwner}/${repo}${tag ? '#' + tag : ''}` 
+
+    //2.把路径资源下载到某个路径上
+    
+    //todo 后续可以增加缓存功能 
+    await wrapLoading(this.downloadGitRepo,`Waiting for download the template of ${repo}`,requestUrl, downloadUrl);
     return downloadUrl;
+  }
+  async downloadNodeModules(downLoadUrl){
+    console.log(chalk.green('\n √ Generation completed!'))
+    console.log(chalk.green(`\n cd ${this.name} \n npm install \n`))
+
+    return true;
+
   }
 
 

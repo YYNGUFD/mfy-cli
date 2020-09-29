@@ -8,7 +8,7 @@ const log = console.log;
 //当前cli的名称 
 const cliName = packageData.name;
 
-console.log(chalk.greenBright.bold(`🌹 🌹 welcome to use ${cliName}🌹 🌹 \r\t`));
+console.log(chalk.yellowBright.bold(`🌹 🌹 welcome to use ${cliName}🌹 🌹 \r\t`));
 
 
 /**
