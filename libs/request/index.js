@@ -8,8 +8,8 @@ const {gitOwner} = require('../config');
 axios.interceptors.response.use(res=>{
   return res.data;
 })
-async function getRepoList(){  
-  let result = axios.get(`https://api.github.com/orgs/${gitOwner}/repos`);
+async function getRepoList(configOwner){   
+  let result = axios.get(`https://api.github.com/orgs/${configOwner?configOwner:gitOwner}/repos`);
   return result; 
 }
 async function getRepoTags(repo){

@@ -66,10 +66,12 @@ program.command('config [value]')
   .description("inspect and modify the config")
   .option("-g,--get <path>", 'get value from options')
   .option("-s,--set <path> <value>", 'set value from options')
+  .option("-sm,--setTemplate", 'set yourself template')
   .option("-d,--delete <path> <value>", 'delete options from config')
   .action((value, cmd) => {
-    //调用config
+    //调用config 
     console.log(value, clearArgs(cmd)) //提取cmd中的属性
+    require('../libs/command/config.js')(value, clearArgs(cmd))
   })
 
 //credit-cli 的版本信息

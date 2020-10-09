@@ -26,7 +26,7 @@ async function wrapLoading(){
    let repos = await fn(...args);
    spiner.succeed();
    return repos;
- }catch(e){
+ }catch(e){ 
    spiner.fail("request failed , refetching...")
    await sleep(1000)
    return wrapLoading(fn,message,...args) 
@@ -62,5 +62,7 @@ class  Loading{
 module.exports={
  sleep,
  wrapLoading,
- Loading:Loading
+ Loading:Loading,
+ toArray:toArray,
+ isString:isString,
 }
