@@ -32,7 +32,7 @@ async function wrapLoading(){
    return wrapLoading(fn,message,...args) 
  }  
 }
-
+ 
 function toArray(arr){
   return Array.prototype.slice.call(arr)
 }

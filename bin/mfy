@@ -67,10 +67,10 @@ program.command('config [value]')
   .option("-g,--get <path>", 'get value from options')
   .option("-s,--set <path> <value>", 'set value from options')
   .option("-sm,--setTemplate", 'set yourself template')
+  .option("-smc,--defaultConfig", 'set default template')
   .option("-d,--delete <path> <value>", 'delete options from config')
   .action((value, cmd) => {
-    //调用config 
-    console.log(value, clearArgs(cmd)) //提取cmd中的属性
+    //调用config   
     require('../libs/command/config.js')(value, clearArgs(cmd))
   })
 
