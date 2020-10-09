@@ -5,6 +5,7 @@
   "bin": "./bin/mfy",
   "gitOwner": "mfy-template",
   "defaultOwner": "mfy-template",
+  "main": "./bin/mfy",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -15,10 +16,9 @@
     "commander": "^6.1.0",
     "fs-extra": "^9.0.1",
     "inquirer": "^7.3.3",
-    "ora": "^5.1.0"
-  },
-  "devDependencies": {
+    "ora": "^5.1.0",
     "axios": "^0.20.0",
     "download-git-repo": "^3.0.2"
-  }
+  },
+  "devDependencies": {}
 }
