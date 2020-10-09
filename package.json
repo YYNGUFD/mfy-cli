@@ -1,6 +1,6 @@
 {
   "name": "mfy-cli",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "mfy-cli ",
   "bin": "./bin/mfy",
   "gitOwner": "mfy-template",
