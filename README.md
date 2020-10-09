@@ -1,4 +1,5 @@
  
+ 
 # mfy-cli
 
  
@@ -15,3 +16,16 @@
 
 ### 初始化命令配置
 ## 使用开发配置
+#### default template
+```
+https://github.com/mfy-template
+```
+#### 修改自定义的项目源
+```
+mfy-cli config -sm
+```
+### 修改成默认源
+```
+mfy-cli config -smc
+```
+
