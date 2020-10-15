@@ -1,3 +1,11 @@
+<!--
+ * @Descripttion: 
+ * @version: 
+ * @Author: mafengyan
+ * @Date: 2020-09-29 10:17:14
+ * @LastEditors: mafengyan
+ * @LastEditTime: 2020-10-15 09:31:51
+-->
  
  
 # mfy-cli
@@ -21,4 +29,16 @@ mfy-cli config -sm
 ```
 mfy-cli config -smc
 ```
+
+### 增加文件
+```
+mfy-cli add fileName 
+```
+* fileName 可以是绝对路径
+
+### 删除文件/文件夹
+```
+mfy-cli delete fileName
+```
+* filename 可以是文件或者文件夹
 

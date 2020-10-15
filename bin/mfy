@@ -74,6 +74,29 @@ program.command('config [value]')
     require('../libs/command/config.js')(value, clearArgs(cmd))
   })
 
+//添加项目选项 
+program.command('add [path]')
+  .description("add dirtory or file")  
+  .action((path, cmd) => {
+    //调用config 
+    if(!path) {
+      log(chalk.red.bold("You must to add the path"))
+      return ;
+    } 
+    require('../libs/command/add.js')(path, clearArgs(cmd))
+})
+//删除项目
+program.command('delete [path]')
+  .description("add dirtory or file")  
+  .action((path, cmd) => {
+    //调用config 
+    if(!path) {
+      log(chalk.red.bold("You must to add path"))
+      return ;
+    } 
+    require('../libs/command/delete.js')(path, clearArgs(cmd))
+})
+
 //credit-cli 的版本信息
 program
   .version(`${cliName}@${packageData.version}`)
