@@ -1,16 +1,16 @@
 
 
 const { getRepoList, getRepoTags } = require('../request/index')
-const { wrapLoading ,Loading} = require('../tools/util')
-const { chalk, inquirer,ora} = require('../tools/module')
+const { wrapLoading, Loading } = require('../tools/util')
+const { inquirer } = require('../tools/module')
 const exec = require('child_process').exec
-const {gitOwner} = require('../config');
+const { gitOwner } = require('../config');
 
 //downloadGitRepo 为普通方法，不支持promise
 const downloadGitRepo = require('download-git-repo')
 const util = require('util');
 const path = require('path')
-const log = require("../tools/log") 
+const log = require("../tools/log")
 
 const loading = new Loading();
 class Creator {
@@ -70,34 +70,34 @@ class Creator {
   }
   async downloadGit(repo, tag) {
     let downloadUrl = path.resolve(process.cwd(), this.target);
-  
+
     //先拼接出下载路径
-    let requestUrl = `${gitOwner}/${repo}${tag ? '#' + tag : ''}` 
+    let requestUrl = `${gitOwner}/${repo}${tag ? '#' + tag : ''}`
 
     //2.把路径资源下载到某个路径上
-    
+
     //todo 后续可以增加缓存功能 
-    await wrapLoading(this.downloadGitRepo,`Waiting for download the template of ${repo}`,requestUrl, downloadUrl);
+    await wrapLoading(this.downloadGitRepo, `Waiting for download the template of ${repo}`, requestUrl, downloadUrl);
     return downloadUrl;
   }
-  async downloadNodeModules(downLoadUrl){
+  async downloadNodeModules(downLoadUrl) {
     let that = this;
     log.success('\n √ Generation completed!')
-  
-    const execProcess = `cd ${downLoadUrl} && npm install`; 
+
+    const execProcess = `cd ${downLoadUrl} && npm install`;
     loading.show("Downloading node_modules")
-    exec(execProcess, function(error, stdout, stderr) { 
-      if(error){ 
-         loading.fail(error)
-         log.warning(`\rplease enter file《 ${that.name} 》 to install dependencies`)
-         log.success(`\n cd ${that.name} \n npm install \n`)
-         process.exit()
-      }else{
+    exec(execProcess, function (error, stdout, stderr) {
+      if (error) {
+        loading.fail(error)
+        log.warning(`\rplease enter file《 ${that.name} 》 to install dependencies`)
+        log.success(`\n cd ${that.name} \n npm install \n`)
+        process.exit()
+      } else {
         log.success(`\n cd ${that.name} \n npm run server \n`)
-      } 
+      }
       process.exit()
     });
-    return true; 
+    return true;
   }
 
 

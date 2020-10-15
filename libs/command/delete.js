@@ -3,15 +3,15 @@
  * 删除项目
  */
 const { fse, inquirer } = require("../tools/module")
-const path = require("path") 
-const log = require("../tools/log") 
+const path = require("path")
+const log = require("../tools/log")
 module.exports = async (fileDir, args) => {
   /**
    * 1.判断当前项目是否存在
    * 2.存在进行提示 是否删除
    * 3.不存在进行提示
    */
-  if (!fse.existsSync(fileDir)) { 
+  if (!fse.existsSync(fileDir)) {
     log.warning("the filename of " + fileDir + " is not exists")
     process.exit(0)
   }
