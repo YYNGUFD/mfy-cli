@@ -1,9 +1,9 @@
  
  
  const path = require('path')
- const {chalk,inquirer,fse} = require('../tools/module')
+ const {inquirer,fse} = require('../tools/module')
  const Creator = require('../create-project/Creator')
- const log = console.log;
+ const log = require("../tools/log") 
 //创建项目
 module.exports =async function(projectName,options){ 
     // todo 校验文件内容格式
@@ -32,12 +32,12 @@ module.exports =async function(projectName,options){
           }, 
         ])
        if(!action) {
-         log(chalk.blue("Have no choice"))
+        log.info("Have no choice")
          process.exit(0) 
        }else if(action =='overwrite'){
-         log(chalk.blue.bold(`\r Removing.....`))
+        log.info(`\r Removing.....`)
          await fse.remove(targetDir);
-         log(chalk.blue(`\rThe file has been successfully deleted`))
+         log.success(`\rThe file has been successfully deleted`)
        }
       }
     }

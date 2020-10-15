@@ -10,7 +10,7 @@ const {gitOwner} = require('../config');
 const downloadGitRepo = require('download-git-repo')
 const util = require('util');
 const path = require('path')
-const log = console.log 
+const log = require("../tools/log") 
 
 const loading = new Loading();
 class Creator {
@@ -39,7 +39,7 @@ class Creator {
   async getRepoList() {
     let repos = await wrapLoading(getRepoList, 'Waiting for download the repos');
     if (repos.length == 0) {
-      log(chalk.red("No content is currently downloaded"))
+      log.error("No content is currently downloaded")
     }
     //获取repos的name
     repos = repos.map(repo => repo.name)
@@ -57,7 +57,7 @@ class Creator {
   async getRepoTags(repo) {
     let tags = await wrapLoading(getRepoTags, `Waiting for fetch the tags of template ${repo}`, repo);
     if (tags.length == 0) {
-      log(chalk.red("No content is currently downloaded"))
+      log.error("No content is currently downloaded")
     }
     tags = tags.map(tag => tag.name)
     let { tag } = await inquirer.prompt({
@@ -82,18 +82,18 @@ class Creator {
   }
   async downloadNodeModules(downLoadUrl){
     let that = this;
-    log(chalk.green.bold('\n √ Generation completed!'))
+    log.success('\n √ Generation completed!')
   
     const execProcess = `cd ${downLoadUrl} && npm install`; 
     loading.show("Downloading node_modules")
     exec(execProcess, function(error, stdout, stderr) { 
       if(error){ 
          loading.fail(error)
-         log(chalk.red.bold(`\rplease enter file《 ${that.name} 》 to install dependencies`))
-         log(chalk.green.bold(`\n cd ${that.name} \n npm install \n`))
+         log.warning(`\rplease enter file《 ${that.name} 》 to install dependencies`)
+         log.success(`\n cd ${that.name} \n npm install \n`)
          process.exit()
       }else{
-        log(chalk.green.bold(`\n cd ${that.name} \n npm run server \n`))
+        log.success(`\n cd ${that.name} \n npm run server \n`)
       } 
       process.exit()
     });
