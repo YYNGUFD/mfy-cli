@@ -2,10 +2,12 @@
 /**
  * 删除项目
  */
-const { fse, inquirer } = require("../tools/module")
+const { fse, inquirer} = require("../tools/module")
+const loading = require("../modules/Loading")
 const path = require("path")
-const log = require("../tools/log")
+const log = require("../modules/Log")
 module.exports = async (fileDir, args) => {
+  
   /**
    * 1.判断当前项目是否存在
    * 2.存在进行提示 是否删除
@@ -24,20 +26,22 @@ module.exports = async (fileDir, args) => {
       let op = await inquirer.prompt([{
         name: 'confirm',
         type: 'confirm',
-        message: `this dirtory has file ,Do you want to continue to delete it ?`,
+        message: `This dirtory has file ,Do you want to continue to delete it ?`,
       }])
       if (!op.confirm) {
-        log.info("you cancel this operation")
+        log.info("You cancel this operation!")
         process.exit(0)
       }
     }
   }
   //直接进行删除即可
+  loading.show("Deleting files....")
   try {
     fse.removeSync(fileDir)
-    log.success("Delete successfully")
+    loading.succeed();
+    log.success("\rDelete successfully")
   }
-  catch (err) {
-    log.error(err)
+  catch (err) { 
+    loading.fail(err);
   }
 } 

@@ -1,8 +1,7 @@
  
  
- const {ora} = require('./module')
- const async = require("async")
-
+const {ora} = require('./module')
+const async = require("async")
 async function sleep(n){
   var timer = null;
    return new Promise((resolve,reject)=>{
@@ -43,28 +42,10 @@ function isFn(fn){
 function isString(str){
   return typeof str =='string'
 }
-
-//创建loading
-class  Loading{
-  constructor(msg){ 
-  }
-  show(msg){
-    this.spiner = ora(msg);
-    this.spiner.start(); //开启加载 
-  }
-  fail(msg){
-    if(!this.spiner) return 
-    this.spiner.fail(msg)
-  }
-  succeed(msg){
-    this.spiner.succeed();
-  }
-}
  
 module.exports={
  sleep,
- wrapLoading,
- Loading:Loading,
+ wrapLoading, 
  toArray:toArray,
  isString:isString,
 }

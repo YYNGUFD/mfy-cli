@@ -1,11 +1,12 @@
+
  
-const {chalk}  = require('./module') 
+const {chalk}  = require('../tools/module') 
 let log={}
 const logObj={
   'error':chalk.red.bold,
   'warning':chalk.keyword('orange'),
   'success':chalk.green.bold,
-  'info':chalk.blue,
+  'info':chalk.blue, 
   'common':chalk,
 }
 for(let key in logObj){

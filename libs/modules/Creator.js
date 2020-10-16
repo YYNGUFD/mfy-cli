@@ -10,7 +10,7 @@ const { gitOwner } = require('../config');
 const downloadGitRepo = require('download-git-repo')
 const util = require('util');
 const path = require('path')
-const log = require("../tools/log")
+const log = require("./Log")
 
 const loading = new Loading();
 class Creator {

@@ -3,7 +3,7 @@
 const path = require('path')
 const { inquirer, fse } = require('../tools/module')
 const Creator = require('../modules/Creator')
-const log = require("../tools/log")
+const log = require("../modules/Log")
 //创建项目
 module.exports = async function (projectName, options) {
   // todo 校验文件内容格式

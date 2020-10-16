@@ -6,8 +6,9 @@
 const { fse, inquirer, } = require("../tools/module");
 const path = require('path')
 const async = require('async')
-const log = require("../tools/log") 
-const {addTemplate,templateConfig,fileExtList} = require('../config/template')
+const log = require("../modules/Log")
+const { addTemplate, templateConfig, fileExtList } = require('../config/template')
+const {createSerialEventNoRe} = require("../modules/async")
 
 module.exports = async function (fileDir, options) {
   //创建模版文件
@@ -16,7 +17,7 @@ module.exports = async function (fileDir, options) {
     return;
   }
   //创建单个文件
-  createSingleFile(fileDir,options)
+  createSingleFile(fileDir, options)
 }
 /**
  * 打印内容
@@ -37,8 +38,8 @@ function printLog(resultReason) {
  * 创建单个文本文件
  * @param {*} fileDir 
  */
-async function createSingleFile(fileDir,options){
-    //只能输入相对路径
+async function createSingleFile(fileDir, options) {
+  //只能输入相对路径
   if (path.isAbsolute(fileDir)) {
     log.error("pleacse input relative path")
     process.exit(0)
@@ -66,17 +67,17 @@ async function createSingleFile(fileDir,options){
       },]
     )
     resultExt = resultExt.fileExt;
-  } 
-  resultExt=resultExt.map(item=>currentfileName+item)
-  await createFileEvent(resultExt,dir,options.force)
+  }
+  resultExt = resultExt.map(item => currentfileName + item)
+  await createFileEvent(resultExt, dir, options.force)
   log.success("All files have completed")
-} 
+}
 
 /**
  * 创建文件模版
  * @param {*} templateName 输入要创建的模版名称
  */
- async function createTemplate(templateName) { 
+async function createTemplate(templateName) {
   /**
    * 1.模版名字输入是否合理  没有模版则进行添加文件名称 文件中不包含/字符 * 
    */
@@ -94,22 +95,22 @@ async function createSingleFile(fileDir,options){
   if (/\//g.test(createDirName)) {
     log.error("The template name has special icon '/', Can't to create ,please operate again")
     process.exit(1)
-  } 
+  }
   //当前文件夹是否存在
   if (fse.pathExistsSync(createDirName)) {
     log.warning("Dirtory has exists will delete...")
     fse.removeSync(createDirName)
   }
   //选择要进行生成的模版类型
-  let type =Object.keys(addTemplate) ;
-  let resultTemType =await inquirer.prompt([{
+  let type = Object.keys(addTemplate);
+  let resultTemType = await inquirer.prompt([{
     name: 'type',
     type: 'list',
-    choices:type,
+    choices: type,
     message: 'Please select template type'
   }])
-  let templateType = resultTemType.type;  
-  await createFileEvent(addTemplate[templateType],createDirName,true)
+  let templateType = resultTemType.type;
+  await createFileEvent(addTemplate[templateType], createDirName, true)
   log.success(`👋 ${createDirName} 👋Template create successfully`)
 }
 
@@ -119,30 +120,24 @@ async function createSingleFile(fileDir,options){
  * @param {*} dirName 文件夹名称
  * @param {*} force 是否需要强制去更新 
  */
- async function createFileEvent(arr,dirName,force){
-  let funArr = arr.map((item) => {
-    return async function (callback) { 
-      let fileName = path.join(dirName,item)
-      let result = await createFile(fileName, force); 
-       callback(null, result) 
-    }
+async function createFileEvent(arr, dirName, force) {
+  let resArr=[]
+  createSerialEventNoRe(arr,async (item)=>{
+    let fileName = path.join(dirName, item)
+    let result = await createFile(fileName, force);
+    resArr.push(result)
+  },(res)=>{  
+      printLog(resArr)
   })
-  async.series(funArr, (err, result) => {
-    if (result.length == funArr.length) {
-      printLog(result)
-    }
-  }) 
 }
-
-
 /**
  * 创建文件
  * @param {*} fileName  文件名字
  * @param {*} force 是否需要强制创建
  */
- async function  createFile (fileName, force) { 
+async function createFile(fileName, force) {
   const { ext } = path.parse(fileName)
-  const fileExt =ext;
+  const fileExt = ext;
   //2.判读文件是否存在ext
   if (fse.pathExistsSync(fileName)) {
     if (!force) {
@@ -153,14 +148,11 @@ async function createSingleFile(fileDir,options){
         type: 'confirm',
         message: `Do you want to continue to create file ? if this will delete the same file`,
       }])
-      if (op.confirm) {
-        fse.removeSync(fileName);
-      } else {
+      if (!op.confirm) {
         return { type: false, msg: `${fileName} ^ Cancel create` }
       }
-    } else {
-      fse.removeSync(fileName);
     }
+    fse.removeSync(fileName);
   }
   //3.如果是.vue文件或者是.json文件进行文本的copy 
   const tplPath = path.join(__dirname, '../../template/index' + fileExt);
