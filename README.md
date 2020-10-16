@@ -1,14 +1,7 @@
-<!--
- * @Descripttion: 
- * @version: 
- * @Author: mafengyan
- * @Date: 2020-09-29 10:17:14
- * @LastEditors: mafengyan
- * @LastEditTime: 2020-10-15 09:31:51
--->
  
  
 # mfy-cli
+
   
 ## 使用开发配置
 ### 创建项目
@@ -25,6 +18,7 @@ https://github.com/mfy-template
 ```
 mfy-cli config -sm
 ```
+
 ### 修改成默认源
 ```
 mfy-cli config -smc
@@ -40,5 +34,6 @@ mfy-cli add fileName
 ```
 mfy-cli delete fileName
 ```
+
 * filename 可以是文件或者文件夹
 
