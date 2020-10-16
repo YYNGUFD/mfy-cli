@@ -1,6 +1,7 @@
  
  
  const {ora} = require('./module')
+ const async = require("async")
 
 async function sleep(n){
   var timer = null;
@@ -59,6 +60,7 @@ class  Loading{
     this.spiner.succeed();
   }
 }
+ 
 module.exports={
  sleep,
  wrapLoading,

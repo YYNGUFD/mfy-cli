@@ -75,17 +75,20 @@ program.command('config [value]')
   })
 
 //添加项目选项 
-program.command('add [path]')
+program.command('add   [path]')
   .description("add dirtory or file")  
-  .option("-f,--force", 'overwrite target if it exists')
+  .option("-f,--force", 'overwrite target if it exists') 
+  .option("-t,--template", 'create teemplatee') 
   .action((path, cmd) => {
+    let args = clearArgs(cmd); 
     //调用config 
-    if(!path) {
+    if(!path && (args && !args.template)) {
       log(chalk.red.bold("You must to add the path"))
       return ;
-    } 
+    }  
     require('../libs/command/add.js')(path, clearArgs(cmd))
 })
+
 //删除项目
 program.command('delete [path]')
   .description("add dirtory or file")  
