@@ -46,7 +46,7 @@ async function createSingleFile(fileDir, options) {
   }
   const { dir, base, ext } = path.parse(fileDir)
   //1.判断当前最后一个文件是否有后缀，如果没有后缀，则进行后缀选择，如果有直接创建文件
-  let currentfileName = base, resultExt = ext;
+  let currentfileName = base, resultExt = [ext];
   if (!ext) {
     resultExt = await inquirer.prompt([
       {
@@ -70,7 +70,7 @@ async function createSingleFile(fileDir, options) {
   }
   resultExt = resultExt.map(item => currentfileName + item)
   await createFileEvent(resultExt, dir, options.force)
-  log.success("All files have completed")
+  // log.success("All files have completed")
 }
 
 /**

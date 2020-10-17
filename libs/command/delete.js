@@ -21,9 +21,13 @@ module.exports = async (fileDir, args) => {
     let files = fse.readdirSync(path.join('./',dir))
     let sFileName = base.split(".")[0]
     files.forEach(item=>{
-      if(item.indexOf(sFileName)!=-1)
+      if(item.indexOf(sFileName)!=-1 && fse.statSync(path.join(dir,item)).isFile())
       fileLists.push(item)
-    }) 
+    })  
+    if(fileLists.length==0){
+      log.error("Nothing files matched!!!")
+      return ;
+    }
      //文件存在 判断是否是文件夹 如果是文件夹并且内部包含文件 则进行提示 选择
     fileLists.forEach(file=>{ 
       let filePath = path.join(dir,file)
@@ -31,10 +35,9 @@ module.exports = async (fileDir, args) => {
       if(fi.isFile()){
         fse.removeSync(filePath)
       }
-    })
-    if(fileLists.length==0){
-      log.error("Nothing match the filename")
-    }
+    }) 
+    log.success("\rDelete successfully") 
+   
     return ;
   }
   if (!fse.existsSync(fileDir)) {

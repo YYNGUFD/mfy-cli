@@ -1,3 +1,4 @@
+ 
 const { inquirer, chalk ,fse} = require('../tools/module')
 const {defaultOwner} = require('../config') 
 const path = require('path')  
@@ -7,9 +8,7 @@ const log = console.log
 module.exports = async function (value, options) {
 
   //设置模板名字 解构相应的变量
-  let { setTemplate,defaultConfig} = options;
-  console.log(options)
-
+  let { setTemplate,defaultConfig} = options; 
   //如果是设置模板字符样式
   if (setTemplate) {
     configTemplate(options)
@@ -22,7 +21,7 @@ module.exports = async function (value, options) {
 }
 async function editTemplate(name,msg){
   //进行更改文件 package.json 中的 gitOwner
-  let targetPath =  path.join(process.cwd(),'package.json')
+  let targetPath =  path.join(__dirname,'../../package.json') 
   //读取文件
   await fse.readJson(targetPath).then(packageJson=>{  
     packageJson.gitOwner = name; 
@@ -58,7 +57,7 @@ async function configTemplate(options){
     }])  
 
     if(!confirmResult.confirm) {
-      log(chalk.red.bold("You have select exit this config!"))
+      log(chalk.red.bold("You cancel this operation!"))
       process.exit(0) 
     }
     editTemplate(result.repoName,'🎉 config successful!!!')   
