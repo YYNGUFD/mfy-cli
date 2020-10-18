@@ -98,6 +98,7 @@ program.command('delete [path]')
       log(chalk.red.bold("You must to add path"))
       return ;
     } 
+    console.log(path)
     require('../libs/command/delete.js')(path, clearArgs(cmd))
 })
 

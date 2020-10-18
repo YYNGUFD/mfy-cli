@@ -15,8 +15,8 @@ module.exports = async (fileDir, args) => {
    */ 
   //正则匹配到文件内容  
   let fileLists=[];
-  //正则匹配式 删除文件
-  if(/(.*)$/g.test(fileDir)){ 
+  //正则匹配式 删除文件 
+  if(/(.\*)$/g.test(fileDir)){ 
     //获取dir文件夹下的所有的和m.*的匹配文件 
     let files = fse.readdirSync(path.join('./',dir))
     let sFileName = base.split(".")[0]

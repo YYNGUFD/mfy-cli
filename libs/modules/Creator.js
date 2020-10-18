@@ -1,7 +1,7 @@
 
 
 const { getRepoList, getRepoTags } = require('../request/index')
-const { wrapLoading, Loading } = require('../tools/util')
+const { wrapLoading } = require('../tools/util')
 const { inquirer } = require('../tools/module')
 const exec = require('child_process').exec
 const { gitOwner } = require('../config');
@@ -12,7 +12,7 @@ const util = require('util');
 const path = require('path')
 const log = require("./Log")
 
-const loading = new Loading();
+const loading = require("./Loading");
 class Creator {
   constructor(projectName, targetDir) {
 
