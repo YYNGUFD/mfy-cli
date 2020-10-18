@@ -10,6 +10,7 @@
     "type": "git",
     "url": "https://github.com/YYNGUFD/mfy-cli"
   },
+  "keywords": ["cli"],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
