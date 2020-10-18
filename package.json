@@ -1,6 +1,6 @@
 {
   "name": "mfy-cli",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "mfy-cli ",
   "bin": "./bin/mfy",
   "gitOwner": "mfy-template",
@@ -10,7 +10,10 @@
     "type": "git",
     "url": "https://github.com/YYNGUFD/mfy-cli"
   },
-  "keywords": ["cli","mfy-cli"],
+  "keywords": [
+    "cli",
+    "mfy-cli"
+  ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
