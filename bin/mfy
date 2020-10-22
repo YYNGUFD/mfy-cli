@@ -1,7 +1,7 @@
 #!/usr/bin/env node
  
 
-const { chalk, program, inquirer } = require('../libs/tools/module')
+const { chalk, program } = require('../libs/tools/module')
 const packageData = require('../package.json')
 const log = console.log;
 
@@ -75,7 +75,7 @@ program.command('config [value]')
   })
 
 //添加项目选项 
-program.command('add   [path]')
+program.command('add  [path]')
   .description("add dirtory or file")  
   .option("-f,--force", 'overwrite target if it exists') 
   .option("-t,--template", 'create teemplatee') 
@@ -91,15 +91,19 @@ program.command('add   [path]')
 
 //删除项目
 program.command('delete [path]')
-  .description("add dirtory or file")  
+  .description("delete dirtory or file")  
   .action((path, cmd) => {
+    //path
+    console.log(path)
+    console.log(cmd)
     //调用config 
     if(!path) {
       log(chalk.red.bold("You must to add path"))
       return ;
-    } 
-    console.log(path)
-    require('../libs/command/delete.js')(path, clearArgs(cmd))
+    }  
+    //输入可能是正则 ，因此会匹配相关的文件，需要进行处理
+    let args = cmd.args; 
+    require('../libs/command/delete.js')(args, clearArgs(cmd))
 })
 
 //credit-cli 的版本信息

@@ -85,7 +85,7 @@ async function createTemplate(templateName) {
   //2.1 选择创建的样式类型
   let createDirName = templateName;
   if (!createDirName) {
-    let dirInputName = inquirer.prompt([{
+    let dirInputName =await inquirer.prompt([{
       name: 'dirname',
       type: 'input',
       message: 'Please input the template name:'

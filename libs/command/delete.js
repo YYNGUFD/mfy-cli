@@ -6,8 +6,7 @@ const { fse, inquirer} = require("../tools/module")
 const loading = require("../modules/Loading")
 const path = require("path")
 const log = require("../modules/Log")
-module.exports = async (fileDir, args) => {
-  const {dir,base} = path.parse(fileDir)
+module.exports = async (fileDirArr, args) => { 
   /**
    * 1.判断当前项目是否存在
    * 2.存在进行提示 是否删除
@@ -15,31 +14,22 @@ module.exports = async (fileDir, args) => {
    */ 
   //正则匹配到文件内容  
   let fileLists=[];
-  //正则匹配式 删除文件 
-  if(/(.\*)$/g.test(fileDir)){ 
-    //获取dir文件夹下的所有的和m.*的匹配文件 
-    let files = fse.readdirSync(path.join('./',dir))
-    let sFileName = base.split(".")[0]
-    files.forEach(item=>{
-      if(item.indexOf(sFileName)!=-1 && fse.statSync(path.join(dir,item)).isFile())
-      fileLists.push(item)
-    })  
-    if(fileLists.length==0){
-      log.error("Nothing files matched!!!")
-      return ;
-    }
+  //正则匹配式 删除文件  
+  if(fileDirArr.length>1){ 
+    fileLists = fileDirArr;
      //文件存在 判断是否是文件夹 如果是文件夹并且内部包含文件 则进行提示 选择
-    fileLists.forEach(file=>{ 
-      let filePath = path.join(dir,file)
+    fileLists.forEach(file=>{  
+      let filePath = file
       let fi = fse.statSync(filePath)
       if(fi.isFile()){
         fse.removeSync(filePath)
       }
     }) 
-    log.success("\rDelete successfully") 
-   
+    log.success("\rDelete successfully")  
     return ;
   }
+
+  let fileDir = fileDirArr[0]
   if (!fse.existsSync(fileDir)) {
     log.warning("the filename of " + fileDir + " is not exists")
     process.exit(0)

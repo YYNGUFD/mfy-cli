@@ -82,7 +82,6 @@ mfy-cli add mfy
         mfy.json  ===== Create successful
 ```
 ###### 输入参数为路径
-
 ```
 mfy-cli add mfy/path.js
 ```
@@ -98,6 +97,21 @@ mfy-cli add mfy/mfy1
 ```
 mfy-cli add path -f
 ``` 
+#####  创建模版文件
+```
+mfy-cli add -t <template-name>
+```
+选择后进行操作即可
+```
+🌟---------------------------------------🌟
+    👏 welcome to use mfy-cli👏    
+🌟---------------------------------------🌟
+? Please input the template name: exit
+? Please select template type vue
+        exit/index.vue  ===== Create successful
+        exit/index.less  ===== Create successful
+        exit/index.js  ===== Create successful
+```
 
 [注意点]fileName 相对路径
 
