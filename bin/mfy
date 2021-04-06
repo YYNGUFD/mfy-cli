@@ -78,7 +78,7 @@ program.command('config [value]')
 program.command('add  [path]')
   .description("add dirtory or file")  
   .option("-f,--force", 'overwrite target if it exists') 
-  .option("-t,--template", 'create teemplatee') 
+  .option("-t,--template", 'create templatee') 
   .action((path, cmd) => {
     let args = clearArgs(cmd); 
     //调用config 

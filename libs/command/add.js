@@ -4,8 +4,7 @@
  * add 
  */
 const { fse, inquirer, } = require("../tools/module");
-const path = require('path')
-const async = require('async')
+const path = require('path') 
 const log = require("../modules/Log")
 const { addTemplate, templateConfig, fileExtList } = require('../config/template')
 const {createSerialEventNoRe} = require("../modules/async")
